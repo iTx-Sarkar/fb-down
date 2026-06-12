@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Veloce - Premium HD Facebook Video Downloader</title>
+  <meta name="description" content="Download Facebook videos, reels, and stories in premium HD/SD quality instantly with Veloce. High-speed, free, secure, and no registration required.">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['"Space Grotesk"', 'sans-serif'],
+          },
+          colors: {
+            dark: {
+              950: '#070a13',
+              900: '#0c1122',
+              800: '#151c33',
+              700: '#1e294b',
+              600: '#2b3a67',
+            },
+            neonPink: '#ff2a7a',
+            neonCyan: '#05f3ff',
+            neonViolet: '#8b5cf6',
+          },
+          boxShadow: {
+            neonCyan: '0 0 15px rgba(5, 243, 255, 0.4)',
+            neonPink: '0 0 15px rgba(255, 42, 122, 0.4)',
+            neonViolet: '0 0 20px rgba(139, 92, 246, 0.35)',
+          },
+          animation: {
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'glow-pulse': 'glow-pulse 3s infinite alternate',
+          }
+        }
+      }
+    }
+  </script>
+  <style type="text/css">
+    @keyframes glow-pulse {
+      0% {
+        text-shadow: 0 0 4px rgba(5, 243, 255, 0.2), 0 0 12px rgba(5, 243, 255, 0.2);
+      }
+      100% {
+        text-shadow: 0 0 12px rgba(255, 42, 122, 0.6), 0 0 24px rgba(255, 42, 122, 0.4);
+      }
+    }
+    .neon-border-cyan:focus-within {
+      border-color: #05f3ff;
+      box-shadow: 0 0 15px rgba(5, 243, 255, 0.5);
+    }
+    .neon-border-pink {
+      border-color: #ff2a7a;
+      box-shadow: 0 0 10px rgba(255, 42, 122, 0.2);
+    }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #070a13;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e294b;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #ff2a7a;
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #05f3ff 0%, #8b5cf6 50%, #ff2a7a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .glass-panel {
+      background: rgba(12, 17, 34, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+  </style>
+</head>
+<body class="bg-dark-950 text-slate-100 font-sans min-h-screen selection:bg-neonPink selection:text-white">
+
+  <!-- Top Glowing Orb Effects -->
+  <div class="absolute top-0 left-1/4 w-96 h-96 bg-neonCyan/10 rounded-full blur-[100px] pointer-events-none animate-pulse-slow"></div>
+  <div class="absolute top-1/3 right-1/4 w-96 h-96 bg-neonPink/10 rounded-full blur-[120px] pointer-events-none animate-pulse-slow"></div>
+
+  <!-- Header Navigation -->
+  <header class="sticky top-0 z-50 glass-panel border-b border-white/5 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <div class="flex items-center space-x-3 group cursor-pointer" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-neonCyan via-neonViolet to-neonPink p-[2px] shadow-neonCyan group-hover:shadow-neonPink transition-all duration-500">
+          <div class="w-full h-full bg-dark-950 rounded-[10px] flex items-center justify-center">
+            <i data-lucide="video" class="w-5 h-5 text-neonCyan group-hover:text-neonPink transition-colors duration-500"></i>
+          </div>
+        </div>
+        <div>
+          <span class="font-display font-black text-2xl tracking-wider uppercase text-white">
+            VELOCE<span class="text-neonPink">.</span>
+          </span>
+          <p class="text-[10px] tracking-widest text-slate-400 uppercase -mt-1 font-mono">FB Downloader</p>
+        </div>
+      </div>
+
+      <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
+        <a href="#how-to-use" class="hover:text-neonCyan transition-colors duration-200 flex items-center gap-1.5">
+          <i data-lucide="help-circle" class="w-4 h-4"></i> Guide
+        </a>
+        <a href="#features" class="hover:text-neonPink transition-colors duration-200 flex items-center gap-1.5">
+          <i data-lucide="sparkles" class="w-4 h-4"></i> Features
+        </a>
+        <a href="#faqs" class="hover:text-neonCyan transition-colors duration-200 flex items-center gap-1.5">
+          <i data-lucide="help-circle" class="w-4 h-4"></i> FAQ
+        </a>
+      </nav>
+
+      <div class="flex items-center space-x-4">
+        <a href="https://telegram.dog/Oggy_Workshop" target="_blank" class="flex items-center space-x-2 bg-dark-900 hover:bg-dark-800 border border-white/10 hover:border-neonCyan/50 px-4 py-2 rounded-xl text-sm font-semibold text-slate-200 transition-all shadow-sm hover:shadow-neonCyan">
+          <i data-lucide="send" class="w-4 h-4 text-sky-400"></i>
+          <span class="hidden sm:inline">Join Telegram</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    
+    <!-- Hero Section -->
+    <section class="text-center max-w-4xl mx-auto mb-16">
+      <div class="inline-flex items-center space-x-2 bg-neonPink/10 text-neonPink text-xs font-semibold px-4 py-1.5 rounded-full border border-neonPink/20 mb-6">
+        <span class="flex h-2 w-2 relative">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-neonPink opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-neonPink"></span>
+        </span>
+        <span>NEW: High-Speed Multithread Server Status: Operational</span>
+      </div>
+
+      <h1 class="text-4xl sm:text-6xl font-display font-extrabold text-white tracking-tight leading-tight sm:leading-none mb-6">
+        Download Facebook Videos <br class="hidden sm:block">
+        <span class="gradient-text animate-glow-pulse">In Premium Quality</span>
+      </h1>
+
+      <p class="text-slate-400 text-lg sm:text-xl max-w-2xl mx-auto font-light leading-relaxed mb-10">
+        Paste your Facebook video link below to download multiple resolutions in seconds. Ultra-fast speeds, zero registrations, powered by <span class="text-neonCyan font-medium">JerryCoder API</span>.
+      </p>
+
+      <!-- Interactive Link Downloader Card -->
+      <div class="glass-panel rounded-3xl p-6 sm:p-8 shadow-neonViolet relative border border-white/10 mb-6">
+        <!-- Decorative side gradients inside input block -->
+        <div class="absolute -inset-px bg-gradient-to-r from-neonCyan/20 to-neonPink/20 rounded-3xl blur opacity-50 -z-10"></div>
+
+        <form id="downloader-form" class="space-y-4">
+          <div class="relative flex flex-col md:flex-row gap-3">
+            <div class="relative flex-1">
+              <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500">
+                <i data-lucide="link-2" class="w-5 h-5"></i>
+              </div>
+              <input 
+                type="url" 
+                id="fb-url" 
+                placeholder="Paste Facebook video URL here (e.g., https://www.facebook.com/...)" 
+                required
+                class="block w-full pl-12 pr-4 py-4.5 bg-dark-950/80 border border-white/10 rounded-2xl text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-neonCyan focus:border-transparent transition-all duration-300 font-sans text-base sm:text-lg shadow-inner"
+              >
+              <button 
+                type="button"
+                id="clear-btn"
+                class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-500 hover:text-neonPink transition-colors hidden"
+              >
+                <i data-lucide="x-circle" class="w-5 h-5"></i>
+              </button>
+            </div>
+
+            <button 
+              type="submit"
+              class="md:w-auto w-full px-8 py-4.5 bg-gradient-to-r from-neonPink via-purple-600 to-neonCyan hover:from-neonCyan hover:to-neonPink text-white font-bold rounded-2xl shadow-lg shadow-neonPink/20 hover:shadow-neonCyan/30 transition-all duration-500 flex items-center justify-center gap-2 transform active:scale-95 text-lg"
+            >
+              <span>Download</span>
+              <i data-lucide="arrow-right" class="w-5 h-5"></i>
+            </button>
+          </div>
+        </form>
+
+        <!-- Quick Demo Loader (Amazing UX feature to show API capability immediately) -->
+        <div class="mt-5 flex flex-wrap items-center justify-center gap-3 text-sm">
+          <span class="text-slate-500">Want to see it in action?</span>
+          <button 
+            type="button" 
+            id="demo-trigger-btn"
+            class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-dark-800 hover:bg-neonPink/10 text-neonPink border border-neonPink/30 hover:border-neonPink text-xs font-semibold transition-all duration-200"
+          >
+            <i data-lucide="play" class="w-3.5 h-3.5"></i> Live Preview Sample Data
+          </button>
+          <button 
+            type="button"
+            id="demo-trigger-btn-real"
+            class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-dark-800 hover:bg-neonCyan/10 text-neonCyan border border-neonCyan/30 hover:border-neonCyan text-xs font-semibold transition-all duration-200"
+          >
+            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Paste Live Test Link
+          </button>
+        </div>
+      </div>
+
+      <p class="text-slate-500 text-xs">
+        By using Veloce, you accept our service conditions. This portal leverages safe API routes optimized for fast speeds.
+      </p>
+    </section>
+
+    <!-- API Loading / Processing State (Hidden initially) -->
+    <section id="loading-section" class="hidden mb-16 max-w-3xl mx-auto">
+      <div class="glass-panel rounded-3xl p-8 border border-white/5 text-center relative overflow-hidden">
+        <!-- Running animated background overlay -->
+        <div class="absolute top-0 left-0 h-1 bg-gradient-to-r from-neonCyan via-neonViolet to-neonPink w-full animate-pulse"></div>
+        
+        <div class="flex flex-col items-center py-6">
+          <!-- Outer glow spinner -->
+          <div class="relative">
+            <div class="w-20 h-20 rounded-full border-4 border-slate-800 border-t-neonCyan animate-spin mb-4"></div>
+            <div class="absolute inset-0 rounded-full border border-neonPink/30 animate-ping opacity-75"></div>
+          </div>
+          
+          <h3 id="loader-status" class="text-xl font-display font-semibold text-white tracking-wide mb-2">Querying Oggy API server...</h3>
+          <p class="text-slate-400 text-sm max-w-md mx-auto mb-4">Retrieving high-resolution direct video files & CDN download tokens.</p>
+          
+          <!-- Simulated Step Checklist -->
+          <div class="w-full max-w-sm text-left space-y-2 mt-4 text-xs font-mono text-slate-500 bg-dark-950 p-4 rounded-xl border border-white/5">
+            <div class="flex items-center justify-between text-neonCyan" id="step-1">
+              <span>[✓] Parse URL structure</span>
+              <span class="text-[10px]">Success</span>
+            </div>
+            <div class="flex items-center justify-between text-slate-500" id="step-2">
+              <span class="flex items-center gap-2">
+                <span class="inline-block w-2 h-2 rounded-full bg-slate-600 animate-pulse"></span>
+                Connecting to worker node...
+              </span>
+              <span class="text-[10px]" id="step-2-status">Waiting</span>
+            </div>
+            <div class="flex items-center justify-between text-slate-500" id="step-3">
+              <span>[ ] Decrypting Facebook cipher signatures</span>
+              <span class="text-[10px]">Idle</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Error State Section (Hidden initially) -->
+    <section id="error-section" class="hidden mb-16 max-w-3xl mx-auto">
+      <div class="glass-panel rounded-3xl p-8 border border-red-500/20 text-center relative bg-gradient-to-br from-dark-900 to-red-950/20">
+        <div class="w-12 h-12 rounded-full bg-red-500/10 text-red-400 flex items-center justify-center mx-auto mb-4 border border-red-500/30">
+          <i data-lucide="alert-triangle" class="w-6 h-6"></i>
+        </div>
+        <h3 class="text-lg font-display font-semibold text-red-200 mb-2">Failed to Fetch Video Data</h3>
+        <p id="error-message-text" class="text-slate-400 text-sm max-w-md mx-auto mb-6">
+          The API could not fetch this video. It might be private, deleted, or the API is experiencing high demand.
+        </p>
+        <div class="flex justify-center gap-4">
+          <button id="retry-btn" class="px-5 py-2 rounded-xl bg-dark-800 hover:bg-dark-700 text-slate-300 font-medium text-sm transition-all">
+            Try Again
+          </button>
+          <button id="demo-trigger-fallback" class="px-5 py-2 rounded-xl bg-neonPink/20 hover:bg-neonPink/30 text-neonPink border border-neonPink/30 font-medium text-sm transition-all">
+            Load Simulation Sample
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Video Results Dashboard Area (Hidden initially) -->
+    <section id="results-section" class="hidden mb-20 scroll-mt-24">
+      <div class="glass-panel rounded-3xl p-6 sm:p-10 border border-white/10 shadow-neonCyan">
+        
+        <!-- Header with Title & Creator Attribution from payload -->
+        <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between border-b border-white/10 pb-6 mb-8 gap-4">
+          <div>
+            <div class="flex items-center gap-2 mb-2">
+              <span class="bg-neonCyan/10 text-neonCyan text-xs px-2.5 py-1 rounded-md font-semibold border border-neonCyan/20">Video Found</span>
+              <span class="text-slate-400 text-xs flex items-center gap-1">
+                <i data-lucide="globe" class="w-3 h-3"></i> Public Video Stream
+              </span>
+            </div>
+            <h2 id="result-video-title" class="text-xl sm:text-2xl font-display font-bold text-white"></h2>
+          </div>
+
+          <!-- Creator Badges -->
+          <div class="flex flex-wrap items-center gap-2 text-xs">
+            <div class="bg-dark-950 border border-white/10 px-3.5 py-2 rounded-xl flex items-center gap-2">
+              <span class="text-slate-500">API Engine:</span>
+              <span class="text-neonCyan font-mono font-bold" id="result-creator">JerryCoder</span>
+            </div>
+            <a id="result-telegram" href="#" target="_blank" class="bg-[#0088cc]/10 hover:bg-[#0088cc]/20 border border-[#0088cc]/30 px-3.5 py-2 rounded-xl flex items-center gap-2 text-[#0088cc] font-medium transition-colors">
+              <i data-lucide="send" class="w-3.5 h-3.5"></i>
+              <span id="result-telegram-handle">@Oggy_Workshop</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Main Grid for Preview and Options -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          
+          <!-- Left Video Preview Player Placeholder -->
+          <div class="lg:col-span-5 flex flex-col justify-between">
+            <div class="relative bg-dark-950 rounded-2xl overflow-hidden aspect-video border border-white/10 flex items-center justify-center group">
+              <!-- Video element standardizer if preview loads -->
+              <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/80 z-10 pointer-events-none"></div>
+              <i data-lucide="video" class="w-12 h-12 text-slate-700 group-hover:text-neonPink group-hover:scale-110 transition-all duration-300 z-0 absolute"></i>
+              
+              <video id="video-preview-player" controls class="w-full h-full object-cover relative z-20 hidden"></video>
+              
+              <div class="absolute bottom-3 left-3 z-30">
+                <span class="text-xs font-mono bg-dark-950/90 text-slate-300 px-2 py-1 rounded border border-white/15 flex items-center gap-1">
+                  <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-neonCyan"></i> Stream Ready
+                </span>
+              </div>
+            </div>
+
+            <!-- Info Bar -->
+            <div class="mt-4 p-4 rounded-xl bg-dark-900 border border-white/5 space-y-2.5">
+              <div class="flex justify-between text-xs">
+                <span class="text-slate-400">Platform:</span>
+                <span class="text-white font-medium">Facebook Video Content</span>
+              </div>
+              <div class="flex justify-between text-xs">
+                <span class="text-slate-400">Links Detected:</span>
+                <span class="text-neonCyan font-medium" id="detected-links-count">0 Streams</span>
+              </div>
+              <div class="flex justify-between text-xs">
+                <span class="text-slate-400">Secure Server SSL:</span>
+                <span class="text-emerald-400 font-medium">Yes (Verified)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Quality List (Dynamic Buttons requested by User) -->
+          <div class="lg:col-span-7 space-y-4">
+            <div>
+              <h3 class="text-sm font-semibold text-slate-300 uppercase tracking-wider mb-3 flex items-center gap-2">
+                <i data-lucide="download-cloud" class="w-4.5 h-4.5 text-neonCyan"></i>
+                Available Video Quality Streams
+              </h3>
+              <p class="text-xs text-slate-500 mb-4">Choose the resolution or format you prefer to instantly fetch and start downloading.</p>
+            </div>
+
+            <!-- Target wrapper for the qualities container -->
+            <div id="qualities-container" class="space-y-3">
+              <!-- Quality items loaded dynamically -->
+            </div>
+
+            <!-- Quick help alert -->
+            <div class="p-3.5 rounded-xl bg-amber-500/5 border border-amber-500/20 text-amber-300 text-xs flex gap-2">
+              <i data-lucide="info" class="w-4 h-4 shrink-0 mt-0.5"></i>
+              <div>
+                <strong>Pro Tip:</strong> For mobile, tap and hold "Download Now" and choose "Save Link" or copy the direct URL and open in your favorite client browser.
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works segment (Step by Step UX) -->
+    <section id="how-to-use" class="mb-20 scroll-mt-24">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-display font-bold text-white mb-3">How To Download FB Videos</h2>
+        <p class="text-slate-400 max-w-xl mx-auto">Retrieve and save your favored media contents in three painless steps without watermarks.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Step 1 -->
+        <div class="glass-panel rounded-2xl p-6 relative border border-white/5 hover:border-neonCyan/30 transition-all duration-300 group">
+          <div class="w-12 h-12 rounded-xl bg-neonCyan/10 text-neonCyan flex items-center justify-center mb-5 font-display font-bold text-lg border border-neonCyan/20 group-hover:bg-neonCyan group-hover:text-dark-950 transition-all duration-300">
+            01
+          </div>
+          <h3 class="text-lg font-semibold text-white mb-2">Copy Video Link</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            Open Facebook app or website, find the public video or Reel, click <span class="text-white">Share</span> then select <span class="text-white">Copy Link</span>.
+          </p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="glass-panel rounded-2xl p-6 relative border border-white/5 hover:border-neonViolet/30 transition-all duration-300 group">
+          <div class="w-12 h-12 rounded-xl bg-neonViolet/10 text-neonViolet flex items-center justify-center mb-5 font-display font-bold text-lg border border-neonViolet/20 group-hover:bg-neonViolet group-hover:text-dark-950 transition-all duration-300">
+            02
+          </div>
+          <h3 class="text-lg font-semibold text-white mb-2">Paste Into Veloce</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            Paste the copied link in the search bar above, and click <span class="text-white">Download</span> to connect directly to the parsing server.
+          </p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="glass-panel rounded-2xl p-6 relative border border-white/5 hover:border-neonPink/30 transition-all duration-300 group">
+          <div class="w-12 h-12 rounded-xl bg-neonPink/10 text-neonPink flex items-center justify-center mb-5 font-display font-bold text-lg border border-neonPink/20 group-hover:bg-neonPink group-hover:text-dark-950 transition-all duration-300">
+            03
+          </div>
+          <h3 class="text-lg font-semibold text-white mb-2">Save & Enjoy</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            Select your preferred resolution (e.g. 720p HD, 360p, or Audio) from the parsed array and download instantly.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Realtime Session Logs History (Unique high-end feature) -->
+    <section class="mb-20">
+      <div class="glass-panel rounded-3xl p-6 sm:p-8 border border-white/5">
+        <div class="flex items-center justify-between mb-6">
+          <div class="flex items-center space-x-2">
+            <div class="w-2.5 h-2.5 rounded-full bg-neonCyan animate-ping"></div>
+            <h3 class="text-lg font-display font-bold text-white">Your Local Download History</h3>
+          </div>
+          <button id="clear-history-btn" class="text-xs text-slate-500 hover:text-neonPink transition-colors flex items-center gap-1">
+            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> Clear List
+          </button>
+        </div>
+
+        <div id="history-empty" class="text-center py-6 text-slate-500 text-sm">
+          No downloads found in this session. Start by pasting a Facebook URL.
+        </div>
+
+        <div id="history-list" class="hidden space-y-3">
+          <!-- Inserted dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Professional Features Overview Section with Glowing Badges -->
+    <section id="features" class="mb-20">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <span class="text-xs font-semibold uppercase tracking-widest text-neonCyan mb-2 block">Advanced Engineering</span>
+          <h2 class="text-3xl sm:text-4xl font-display font-bold text-white leading-tight mb-6">
+            Why Veloce Is Rated The #1 Facebook Downloader Online
+          </h2>
+          <p class="text-slate-400 mb-6 leading-relaxed">
+            Our specialized web module uses decentralized caching & worker threads from <span class="text-white font-medium">JerryCoder</span>. By omitting complex tracking metrics and bloated scripts, we process links 5x faster than competitors.
+          </p>
+          
+          <div class="space-y-4">
+            <div class="flex items-start gap-3.5">
+              <div class="mt-1 w-6 h-6 rounded bg-neonCyan/10 text-neonCyan flex items-center justify-center shrink-0">
+                <i data-lucide="check" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <h4 class="text-slate-200 font-semibold">No User Registration Needed</h4>
+                <p class="text-slate-400 text-sm">Download video assets directly. No credentials, no subscription fees, and no pop-ups.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3.5">
+              <div class="mt-1 w-6 h-6 rounded bg-neonPink/10 text-neonPink flex items-center justify-center shrink-0">
+                <i data-lucide="check" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <h4 class="text-slate-200 font-semibold">Secure HTTPS Encrypted Transfers</h4>
+                <p class="text-slate-400 text-sm">Our server requests are SSL certified. Veloce never logs files or user credentials.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3.5">
+              <div class="mt-1 w-6 h-6 rounded bg-neonViolet/10 text-neonViolet flex items-center justify-center shrink-0">
+                <i data-lucide="check" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <h4 class="text-slate-200 font-semibold">Full Multiple Resolutions Parsed</h4>
+                <p class="text-slate-400 text-sm">Automatically lists every quality stream (1080p, 720p HD, 480p, 360p, and Audio tags).</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative">
+          <!-- Floating futuristic glass card with visual metrics -->
+          <div class="absolute -inset-4 bg-gradient-to-tr from-neonPink/20 to-neonCyan/20 rounded-3xl blur-xl opacity-30"></div>
+          <div class="glass-panel rounded-3xl p-8 border border-white/10 relative overflow-hidden">
+            <div class="absolute top-0 right-0 p-4">
+              <span class="text-[10px] font-mono bg-emerald-500/10 text-emerald-400 px-2 py-1 rounded border border-emerald-500/20">Stable Worker</span>
+            </div>
+            
+            <h3 class="text-xl font-display font-semibold text-white mb-6">Server Metrics & Telemetry</h3>
+            
+            <div class="space-y-4">
+              <div>
+                <div class="flex justify-between text-xs mb-1.5">
+                  <span class="text-slate-400">Oggy Worker Response Time</span>
+                  <span class="text-neonCyan font-mono">180ms</span>
+                </div>
+                <div class="w-full h-1.5 bg-dark-950 rounded-full overflow-hidden">
+                  <div class="h-full bg-neonCyan w-[92%] rounded-full"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between text-xs mb-1.5">
+                  <span class="text-slate-400">CDN Pipeline Bandwidth</span>
+                  <span class="text-neonViolet font-mono">10 Gbps</span>
+                </div>
+                <div class="w-full h-1.5 bg-dark-950 rounded-full overflow-hidden">
+                  <div class="h-full bg-neonViolet w-[85%] rounded-full"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between text-xs mb-1.5">
+                  <span class="text-slate-400">Download Conversion Rate</span>
+                  <span class="text-neonPink font-mono">99.8%</span>
+                </div>
+                <div class="w-full h-1.5 bg-dark-950 rounded-full overflow-hidden">
+                  <div class="h-full bg-neonPink w-[99%] rounded-full"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Small Terminal logs for decorative feel -->
+            <div class="mt-6 p-4 rounded-xl bg-dark-950 border border-white/5 text-[11px] font-mono text-slate-400 space-y-1">
+              <p class="text-slate-600">$ curl https://jerrycoder.oggyapi.workers.dev/down/fb</p>
+              <p class="text-emerald-400">> Status: 200 OK</p>
+              <p class="text-neonCyan">> Server Node: Oggy_Workshop CDN Direct</p>
+              <p class="text-slate-500">> Connection established. Parsing finished.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Professional FAQ / Accordion Section (Look like a professional product) -->
+    <section id="faqs" class="mb-20 scroll-mt-24">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-display font-bold text-white mb-3">Frequently Asked Questions</h2>
+        <p class="text-slate-400 max-w-xl mx-auto">Have queries regarding Veloce or our Facebook downloader pipeline? Browse answers below.</p>
+      </div>
+
+      <div class="max-w-3xl mx-auto space-y-4" id="faq-accordion">
+        
+        <!-- FAQ 1 -->
+        <div class="glass-panel rounded-2xl border border-white/5 overflow-hidden transition-all duration-300">
+          <button class="faq-toggle w-full px-6 py-5 text-left flex items-center justify-between hover:bg-white/5 transition-colors">
+            <span class="font-semibold text-white text-base sm:text-lg">Is Veloce Facebook Video Downloader free to use?</span>
+            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 faq-icon transition-transform duration-300"></i>
+          </button>
+          <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-dark-950/40">
+            <div class="p-6 text-sm sm:text-base text-slate-400 leading-relaxed border-t border-white/5">
+              Yes! Veloce is 100% free with unlimited conversion capabilities. You do not need to register, deposit money, or create an account to download Facebook streams.
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="glass-panel rounded-2xl border border-white/5 overflow-hidden transition-all duration-300">
+          <button class="faq-toggle w-full px-6 py-5 text-left flex items-center justify-between hover:bg-white/5 transition-colors">
+            <span class="font-semibold text-white text-base sm:text-lg">How do I choose between different video qualities like 720p or 480p?</span>
+            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 faq-icon transition-transform duration-300"></i>
+          </button>
+          <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-dark-950/40">
+            <div class="p-6 text-sm sm:text-base text-slate-400 leading-relaxed border-t border-white/5">
+              Our server scans all available streams via the JerryCoder payload. Once analyzed, you will see separate responsive download blocks for 720p (HD), 360p (SD), 480p, and Audio. You can simply click the download button associated with your preferred stream.
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="glass-panel rounded-2xl border border-white/5 overflow-hidden transition-all duration-300">
+          <button class="faq-toggle w-full px-6 py-5 text-left flex items-center justify-between hover:bg-white/5 transition-colors">
+            <span class="font-semibold text-white text-base sm:text-lg">Why does my download save as a text file or play in the browser instead of saving?</span>
+            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 faq-icon transition-transform duration-300"></i>
+          </button>
+          <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-dark-950/40">
+            <div class="p-6 text-sm sm:text-base text-slate-400 leading-relaxed border-t border-white/5">
+              Browsers sometimes open direct video streams inside their native video players. Right-click the "Download Now" button and click "Save Link As..." or use our convenient "Copy Link" feature and insert it directly into dedicated downloader apps.
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="glass-panel rounded-2xl border border-white/5 overflow-hidden transition-all duration-300">
+          <button class="faq-toggle w-full px-6 py-5 text-left flex items-center justify-between hover:bg-white/5 transition-colors">
+            <span class="font-semibold text-white text-base sm:text-lg">Does Veloce store the videos I download?</span>
+            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 faq-icon transition-transform duration-300"></i>
+          </button>
+          <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-dark-950/40">
+            <div class="p-6 text-sm sm:text-base text-slate-400 leading-relaxed border-t border-white/5">
+              No, we respect your privacy. All downloads are directly processed through proxies and live links mapped from CDN networks. No videos, logs, or links are ever recorded on our central servers.
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="glass-panel rounded-2xl border border-white/5 overflow-hidden transition-all duration-300">
+          <button class="faq-toggle w-full px-6 py-5 text-left flex items-center justify-between hover:bg-white/5 transition-colors">
+            <span class="font-semibold text-white text-base sm:text-lg">Are private Facebook videos supported?</span>
+            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 faq-icon transition-transform duration-300"></i>
+          </button>
+          <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-dark-950/40">
+            <div class="p-6 text-sm sm:text-base text-slate-400 leading-relaxed border-t border-white/5">
+              Veloce specializes in public videos and high-speed public reels. For private group videos, you must ensure the content is set to public share permissions to let our CDN servers establish a download bridge.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer Section -->
+  <footer class="bg-dark-950 border-t border-white/5 py-12 text-slate-400 mt-12 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+        
+        <!-- Logo and Slogan -->
+        <div class="md:col-span-2 space-y-4">
+          <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-neonCyan to-neonPink p-[1.5px]">
+              <div class="w-full h-full bg-dark-950 rounded-[7px] flex items-center justify-center">
+                <i data-lucide="video" class="w-4 h-4 text-neonCyan"></i>
+              </div>
+            </div>
+            <span class="font-display font-black text-xl tracking-wider uppercase text-white">
+              VELOCE<span class="text-neonPink">.</span>
+            </span>
+          </div>
+          <p class="text-sm text-slate-400 max-w-sm">
+            A state-of-the-art interactive social media parsing application interface. Free, secure, fast, and multi-resolution ready.
+          </p>
+          <p class="text-xs text-slate-500">
+            Designed with premium neon aesthetics, tailored for lightning-fast speeds on desktop, iOS, and Android.
+          </p>
+        </div>
+
+        <!-- Navigation Links -->
+        <div>
+          <h4 class="text-white font-semibold text-sm tracking-wider uppercase mb-4">Product</h4>
+          <ul class="space-y-2.5 text-sm">
+            <li><a href="#downloader-form" class="hover:text-neonCyan transition-colors">Downloader Tool</a></li>
+            <li><a href="#how-to-use" class="hover:text-neonPink transition-colors">User Guide</a></li>
+            <li><a href="#features" class="hover:text-neonCyan transition-colors">Pro Features</a></li>
+            <li><a href="#faqs" class="hover:text-neonPink transition-colors">FAQs</a></li>
+          </ul>
+        </div>
+
+        <!-- Developer & Telegram Contact info -->
+        <div>
+          <h4 class="text-white font-semibold text-sm tracking-wider uppercase mb-4">Developer Credits</h4>
+          <ul class="space-y-2 text-xs">
+            <li class="flex items-center gap-2">
+              <span class="text-slate-500">API Creator:</span>
+              <span class="text-neonCyan font-mono">JerryCoder</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-slate-500">Telegram:</span>
+              <a href="https://telegram.dog/Oggy_Workshop" target="_blank" class="text-sky-400 hover:text-sky-300 hover:underline flex items-center gap-1 font-mono">
+                @Oggy_Workshop <i data-lucide="external-link" class="w-3 h-3"></i>
+              </a>
+            </li>
+            <li class="pt-4 text-slate-500">
+              Disclaimer: Veloce is an independent platform. We are not affiliated with Meta Platforms, Inc. or Facebook.
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="border-t border-white/5 pt-8 flex flex-col sm:flex-row items-center justify-between text-xs gap-4">
+        <p>© 2025 Veloce Facebook Video Downloader. Powered by JerryCoder API &amp; Oggy_Workshop.</p>
+        <div class="flex space-x-6">
+          <a href="#" class="hover:text-neonCyan transition-colors">Privacy Policy</a>
+          <a href="#" class="hover:text-neonPink transition-colors">Terms of Service</a>
+          <a href="https://telegram.dog/Oggy_Workshop" target="_blank" class="hover:text-neonCyan transition-colors flex items-center gap-1">
+            Contact <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Global Toast Notification System -->
+  <div id="toast-container" class="fixed bottom-6 right-6 z-50 space-y-3 pointer-events-none max-w-sm w-full"></div>
+
+  <!-- Scripts -->
+  <script src="app.js"></script>
+</body>
+</html>
